@@ -120,6 +120,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  deleteTrack(id) {
+    const options = {
+      method: 'DELETE',
+      uri: `${this.options.endpoints.tracks}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

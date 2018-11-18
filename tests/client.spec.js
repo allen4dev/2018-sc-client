@@ -32,6 +32,7 @@ describe('client', function() {
 
     expect(typeof client.getTrack).toBe('function');
     expect(typeof client.replyTrack).toBe('function');
+    expect(typeof client.deleteTrack).toBe('function');
     expect(typeof client.favoriteTrack).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
@@ -145,6 +146,18 @@ describe('client', function() {
       const result = await client.getTrack(track.id);
 
       expect(result).toEqual(expectedResponse);
+    });
+
+    test('deleteTrack', async function() {
+      const track = fixtures.getTrack();
+
+      nock(options.endpoints.tracks)
+        .delete(`/${track.id}`)
+        .reply(204);
+
+      const result = await client.deleteTrack(track.id);
+
+      expect(result).toBeUndefined();
     });
 
     test('replyTrack', async function() {
