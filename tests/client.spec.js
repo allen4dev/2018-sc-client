@@ -34,6 +34,7 @@ describe('client', function() {
     expect(typeof client.replyTrack).toBe('function');
     expect(typeof client.deleteTrack).toBe('function');
     expect(typeof client.favoriteTrack).toBe('function');
+    expect(typeof client.shareTrack).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -185,6 +186,20 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.favoriteTrack(track.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('shareTrack', async function() {
+      const track = fixtures.getTrack();
+
+      const expectedResponse = fixtures.getTrackResponse();
+
+      nock(options.endpoints.tracks)
+        .post(`/${track.id}/share`)
+        .reply(200, expectedResponse);
+
+      const result = await client.shareTrack(track.id);
 
       expect(result).toEqual(expectedResponse);
     });

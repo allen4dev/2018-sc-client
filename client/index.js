@@ -130,6 +130,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  shareTrack(id) {
+    const options = {
+      method: 'POST',
+      uri: `${this.options.endpoints.tracks}/${id}/share`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
