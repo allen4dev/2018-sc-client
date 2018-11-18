@@ -6,7 +6,7 @@
     "prettier"
   ],
   "plugins": ["security", "prettier"],
-  "parserOptions": { "ecmaVersion": 6 },
+  "parserOptions": { "ecmaVersion": 2017 },
   "env": {
     "node": true,
     "es6": true,
