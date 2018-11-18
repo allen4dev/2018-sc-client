@@ -100,6 +100,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getReply(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.replies}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

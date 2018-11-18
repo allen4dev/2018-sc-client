@@ -25,11 +25,15 @@ describe('client', function() {
   test('methods', function() {
     expect(typeof client.register).toBe('function');
     expect(typeof client.login).toBe('function');
+
     expect(typeof client.createTrack).toBe('function');
     expect(typeof client.updateTrack).toBe('function');
     expect(typeof client.publishTrack).toBe('function');
+
     expect(typeof client.getTrack).toBe('function');
     expect(typeof client.replyTrack).toBe('function');
+
+    expect(typeof client.getReply).toBe('function');
   });
 
   describe('auth', function() {
@@ -153,6 +157,22 @@ describe('client', function() {
         .reply(201, expectedResponse);
 
       const result = await client.replyTrack(track.id, details);
+
+      expect(result).toEqual(expectedResponse);
+    });
+  });
+
+  describe('replies', function() {
+    test('getReply', async function() {
+      const reply = fixtures.getReply();
+
+      const expectedResponse = fixtures.getReplyResponse();
+
+      nock(options.endpoints.replies)
+        .get(`/${reply.id}`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getReply(reply.id);
 
       expect(result).toEqual(expectedResponse);
     });
