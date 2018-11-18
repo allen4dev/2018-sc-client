@@ -26,6 +26,7 @@ describe('client', function() {
     expect(typeof client.register).toBe('function');
     expect(typeof client.login).toBe('function');
     expect(typeof client.createTrack).toBe('function');
+    expect(typeof client.updateTrack).toBe('function');
   });
 
   describe('auth', function() {
@@ -78,6 +79,28 @@ describe('client', function() {
         .reply(201, expectedResponse);
 
       const result = await client.createTrack(details, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('updateTrack', async function() {
+      const track = fixtures.getTrack();
+
+      const newFields = { title: 'New title' };
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getTrackResponse();
+
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .patch(`/${track.id}`, newFields)
+        .reply(200, expectedResponse);
+
+      const result = await client.updateTrack(track.id, newFields, token);
 
       expect(result).toEqual(expectedResponse);
     });

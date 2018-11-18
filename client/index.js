@@ -52,6 +52,20 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  updateTrack(id, newFields, token) {
+    const options = {
+      method: 'PATCH',
+      uri: `${this.options.endpoints.tracks}/${id}`,
+      body: newFields,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
