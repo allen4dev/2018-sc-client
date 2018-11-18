@@ -27,6 +27,17 @@ class Client {
 
     return Promise.resolve(request(opts));
   }
+
+  login(credentials) {
+    let opts = {
+      method: 'POST',
+      uri: `${this.options.endpoints.auth}/login`,
+      body: credentials,
+      json: true,
+    };
+
+    return Promise.resolve(request(opts));
+  }
 }
 
 module.exports = Client;

@@ -15,6 +15,7 @@ const options = {
     users: 'http://localhost:8000/api/users',
     tags: 'http://localhost:8000/api/tags',
     auth: 'http://localhost:8000/api/auth',
+    me: 'http://localhost:8000/api/me',
   },
 };
 
@@ -23,23 +24,43 @@ describe('client', function() {
 
   test('methods', function() {
     expect(typeof client.register).toBe('function');
+    expect(typeof client.login).toBe('function');
   });
 
-  test('register', async function() {
-    const response = fixtures.getTokenResponse();
+  describe('auth', function() {
+    test('register', async function() {
+      const response = fixtures.getTokenResponse();
 
-    const details = {
-      email: 'allen@example.test',
-      password: 'secret',
-      username: 'Allen',
-    };
+      const details = {
+        email: 'allen@example.test',
+        password: 'secret',
+        username: 'Allen',
+      };
 
-    nock(options.endpoints.auth)
-      .post('/register', details)
-      .reply(201, response);
+      nock(options.endpoints.auth)
+        .post('/register', details)
+        .reply(201, response);
 
-    const result = await client.register(details);
+      const result = await client.register(details);
 
-    expect(result).toEqual(response);
+      expect(result).toEqual(response);
+    });
+
+    test('login', async function() {
+      const response = fixtures.getTokenResponse();
+
+      const credentials = {
+        email: 'allen@example.test',
+        password: 'secret',
+      };
+
+      nock(options.endpoints.auth)
+        .post('/login', credentials)
+        .reply(200, response);
+
+      const result = await client.login(credentials);
+
+      expect(result).toEqual(response);
+    });
   });
 });
