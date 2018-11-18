@@ -110,6 +110,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  favoriteTrack(id) {
+    const options = {
+      method: 'POST',
+      uri: `${this.options.endpoints.tracks}/${id}/favorite`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
