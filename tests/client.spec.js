@@ -36,6 +36,8 @@ describe('client', function() {
     expect(typeof client.favoriteTrack).toBe('function');
     expect(typeof client.shareTrack).toBe('function');
 
+    expect(typeof client.createPlaylist).toBe('function');
+
     expect(typeof client.getReply).toBe('function');
   });
 
@@ -152,11 +154,17 @@ describe('client', function() {
     test('deleteTrack', async function() {
       const track = fixtures.getTrack();
 
-      nock(options.endpoints.tracks)
+      const token = 'xxx.xxx.xxx';
+
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .delete(`/${track.id}`)
         .reply(204);
 
-      const result = await client.deleteTrack(track.id);
+      const result = await client.deleteTrack(track.id, token);
 
       expect(result).toBeUndefined();
     });
@@ -165,13 +173,19 @@ describe('client', function() {
       const track = fixtures.getTrack();
       const details = fixtures.getReply();
 
+      const token = 'xxx.xxx.xxx';
+
       const expectedResponse = fixtures.getReplyResponse();
 
-      nock(options.endpoints.tracks)
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .post(`/${track.id}/replies`, details)
         .reply(201, expectedResponse);
 
-      const result = await client.replyTrack(track.id, details);
+      const result = await client.replyTrack(track.id, details, token);
 
       expect(result).toEqual(expectedResponse);
     });
@@ -179,13 +193,19 @@ describe('client', function() {
     test('favoriteTrack', async function() {
       const track = fixtures.getTrack();
 
+      const token = 'xxx.xxx.xxx';
+
       const expectedResponse = fixtures.getTrackResponse();
 
-      nock(options.endpoints.tracks)
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .post(`/${track.id}/favorite`)
         .reply(200, expectedResponse);
 
-      const result = await client.favoriteTrack(track.id);
+      const result = await client.favoriteTrack(track.id, token);
 
       expect(result).toEqual(expectedResponse);
     });
@@ -193,13 +213,41 @@ describe('client', function() {
     test('shareTrack', async function() {
       const track = fixtures.getTrack();
 
+      const token = 'xxx.xxx.xxx';
+
       const expectedResponse = fixtures.getTrackResponse();
 
-      nock(options.endpoints.tracks)
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .post(`/${track.id}/share`)
         .reply(200, expectedResponse);
 
-      const result = await client.shareTrack(track.id);
+      const result = await client.shareTrack(track.id, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+  });
+
+  describe('playlists', function() {
+    test('createPlaylist', async function() {
+      const details = fixtures.getPlaylist();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getPlaylistResponse();
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post('/', details)
+        .reply(201, expectedResponse);
+
+      const result = await client.createPlaylist(details, token);
 
       expect(result).toEqual(expectedResponse);
     });

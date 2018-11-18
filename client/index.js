@@ -90,9 +90,12 @@ class Client {
     return Promise.resolve(request(options));
   }
 
-  replyTrack(id, details) {
+  replyTrack(id, details, token) {
     const options = {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       uri: `${this.options.endpoints.tracks}/${id}/replies`,
       body: details,
       json: true,
@@ -111,9 +114,12 @@ class Client {
     return Promise.resolve(request(options));
   }
 
-  favoriteTrack(id) {
+  favoriteTrack(id, token) {
     const options = {
       method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       uri: `${this.options.endpoints.tracks}/${id}/favorite`,
       json: true,
     };
@@ -121,9 +127,25 @@ class Client {
     return Promise.resolve(request(options));
   }
 
-  deleteTrack(id) {
+  shareTrack(id, token) {
+    const options = {
+      method: 'POST',
+      uri: `${this.options.endpoints.tracks}/${id}/share`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  deleteTrack(id, token) {
     const options = {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       uri: `${this.options.endpoints.tracks}/${id}`,
       json: true,
     };
@@ -131,10 +153,14 @@ class Client {
     return Promise.resolve(request(options));
   }
 
-  shareTrack(id) {
+  createPlaylist(details, token) {
     const options = {
       method: 'POST',
-      uri: `${this.options.endpoints.tracks}/${id}/share`,
+      uri: `${this.options.endpoints.playlists}/`,
+      body: details,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
       json: true,
     };
 

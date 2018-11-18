@@ -24,6 +24,12 @@ module.exports = {
     };
   },
 
+  getPlaylist() {
+    return {
+      body: 'Horrible playlist',
+    };
+  },
+
   getTokenResponse() {
     return {
       data: {
@@ -52,6 +58,16 @@ module.exports = {
         type: 'replies',
         id: uuid(),
         attributes: this.getReply(),
+      },
+    };
+  },
+
+  getPlaylistResponse() {
+    return {
+      data: {
+        type: 'playlists',
+        id: uuid(),
+        attributes: this.getPlaylist(),
       },
     };
   },
