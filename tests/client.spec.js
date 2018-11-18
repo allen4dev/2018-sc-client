@@ -29,6 +29,7 @@ describe('client', function() {
     expect(typeof client.updateTrack).toBe('function');
     expect(typeof client.publishTrack).toBe('function');
     expect(typeof client.getTrack).toBe('function');
+    expect(typeof client.replyTrack).toBe('function');
   });
 
   describe('auth', function() {
@@ -137,6 +138,21 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.getTrack(track.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('replyTrack', async function() {
+      const track = fixtures.getTrack();
+      const details = fixtures.getReply();
+
+      const expectedResponse = fixtures.getReplyResponse();
+
+      nock(options.endpoints.tracks)
+        .post(`/${track.id}/replies`, details)
+        .reply(201, expectedResponse);
+
+      const result = await client.replyTrack(track.id, details);
 
       expect(result).toEqual(expectedResponse);
     });

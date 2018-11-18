@@ -18,6 +18,12 @@ module.exports = {
     };
   },
 
+  getReply() {
+    return {
+      body: 'Horrible track',
+    };
+  },
+
   getTokenResponse() {
     return {
       data: {
@@ -36,6 +42,16 @@ module.exports = {
         type: 'tracks',
         id: uuid(),
         attributes: this.getTrack(),
+      },
+    };
+  },
+
+  getReplyResponse() {
+    return {
+      data: {
+        type: 'replies',
+        id: uuid(),
+        attributes: this.getReply(),
       },
     };
   },

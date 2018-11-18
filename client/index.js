@@ -6,13 +6,13 @@ class Client {
   constructor(options) {
     this.options = options || {
       endpoints: {
-        tracks: 'http://localhost:8000/api/tracks',
-        playlists: 'http://localhost:8000/api/playlists',
-        albums: 'http://localhost:8000/api/albums',
-        replies: 'http://localhost:8000/api/replies',
-        users: 'http://localhost:8000/api/users',
-        tags: 'http://localhost:8000/api/tags',
-        auth: 'http://localhost:8000/api/auth',
+        tracks: 'https://sc.com/api/tracks',
+        playlists: 'https://sc.com/api/playlists',
+        albums: 'https://sc.com/api/albums',
+        replies: 'https://sc.com/api/replies',
+        users: 'https://sc.com/api/users',
+        tags: 'https://sc.com/api/tags',
+        auth: 'https://sc.com/api/auth',
       },
     };
   }
@@ -84,6 +84,17 @@ class Client {
     const options = {
       method: 'GET',
       uri: `${this.options.endpoints.tracks}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  replyTrack(id, details) {
+    const options = {
+      method: 'POST',
+      uri: `${this.options.endpoints.tracks}/${id}/replies`,
+      body: details,
       json: true,
     };
 
