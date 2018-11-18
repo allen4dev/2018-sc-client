@@ -66,6 +66,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  publishTrack(id, token) {
+    const options = {
+      method: 'POST',
+      uri: `${this.options.endpoints.tracks}/${id}/publish`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

@@ -27,6 +27,7 @@ describe('client', function() {
     expect(typeof client.login).toBe('function');
     expect(typeof client.createTrack).toBe('function');
     expect(typeof client.updateTrack).toBe('function');
+    expect(typeof client.publishTrack).toBe('function');
   });
 
   describe('auth', function() {
@@ -101,6 +102,26 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.updateTrack(track.id, newFields, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('publishTrack', async function() {
+      const track = fixtures.getTrack();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getTrackResponse();
+
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post(`/${track.id}/publish`)
+        .reply(200, expectedResponse);
+
+      const result = await client.publishTrack(track.id, token);
 
       expect(result).toEqual(expectedResponse);
     });
