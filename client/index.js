@@ -18,7 +18,7 @@ class Client {
   }
 
   register(details) {
-    let opts = {
+    const opts = {
       method: 'POST',
       uri: `${this.options.endpoints.auth}/register`,
       body: details,
@@ -37,6 +37,20 @@ class Client {
     };
 
     return Promise.resolve(request(opts));
+  }
+
+  createTrack(details, token) {
+    const options = {
+      method: 'POST',
+      uri: `${this.options.endpoints.tracks}/`,
+      body: details,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
   }
 }
 

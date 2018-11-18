@@ -25,42 +25,61 @@ describe('client', function() {
   test('methods', function() {
     expect(typeof client.register).toBe('function');
     expect(typeof client.login).toBe('function');
+    expect(typeof client.createTrack).toBe('function');
   });
 
   describe('auth', function() {
     test('register', async function() {
-      const response = fixtures.getTokenResponse();
+      const details = fixtures.getUser();
 
-      const details = {
-        email: 'allen@example.test',
-        password: 'secret',
-        username: 'Allen',
-      };
+      const expectedResponse = fixtures.getTokenResponse();
 
       nock(options.endpoints.auth)
         .post('/register', details)
-        .reply(201, response);
+        .reply(201, expectedResponse);
 
       const result = await client.register(details);
 
-      expect(result).toEqual(response);
+      expect(result).toEqual(expectedResponse);
     });
 
     test('login', async function() {
-      const response = fixtures.getTokenResponse();
-
       const credentials = {
         email: 'allen@example.test',
         password: 'secret',
       };
 
+      const expectedResponse = fixtures.getTokenResponse();
+
       nock(options.endpoints.auth)
         .post('/login', credentials)
-        .reply(200, response);
+        .reply(200, expectedResponse);
 
       const result = await client.login(credentials);
 
-      expect(result).toEqual(response);
+      expect(result).toEqual(expectedResponse);
+    });
+  });
+
+  describe('tracks', function() {
+    test('createTrack', async function() {
+      const details = fixtures.getTrack();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getTrackResponse();
+
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post('/', details)
+        .reply(201, expectedResponse);
+
+      const result = await client.createTrack(details, token);
+
+      expect(result).toEqual(expectedResponse);
     });
   });
 });
