@@ -41,6 +41,7 @@ describe('client', function() {
     expect(typeof client.getPlaylist).toBe('function');
     expect(typeof client.updatePlaylist).toBe('function');
     expect(typeof client.favoritePlaylist).toBe('function');
+    expect(typeof client.unfavoritePlaylist).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -330,6 +331,26 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.favoritePlaylist(playlist.id, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('unfavoritePlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getPlaylistResponse();
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .delete(`/${playlist.id}/unfavorite`)
+        .reply(200, expectedResponse);
+
+      const result = await client.unfavoritePlaylist(playlist.id, token);
 
       expect(result).toEqual(expectedResponse);
     });

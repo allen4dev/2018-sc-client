@@ -216,6 +216,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  unfavoritePlaylist(id, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.playlists}/${id}/unfavorite`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
