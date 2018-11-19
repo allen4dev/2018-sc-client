@@ -190,6 +190,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  favoritePlaylist(id, token) {
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.playlists}/${id}/favorite`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

@@ -39,6 +39,7 @@ describe('client', function() {
     expect(typeof client.createPlaylist).toBe('function');
     expect(typeof client.getPlaylist).toBe('function');
     expect(typeof client.updatePlaylist).toBe('function');
+    expect(typeof client.favoritePlaylist).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -288,6 +289,26 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.updatePlaylist(playlist.id, newFields, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('favoritePlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getPlaylistResponse();
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post(`/${playlist.id}/favorite`)
+        .reply(200, expectedResponse);
+
+      const result = await client.favoritePlaylist(playlist.id, token);
 
       expect(result).toEqual(expectedResponse);
     });
