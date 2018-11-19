@@ -204,6 +204,19 @@ class Client {
     return Promise.resolve(request(options));
   }
 
+  deletePlaylist(id, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.playlists}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
   favoritePlaylist(id, token) {
     const options = {
       method: 'POST',

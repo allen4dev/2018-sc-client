@@ -29,7 +29,6 @@ describe('client', function() {
     expect(typeof client.createTrack).toBe('function');
     expect(typeof client.updateTrack).toBe('function');
     expect(typeof client.publishTrack).toBe('function');
-
     expect(typeof client.getTrack).toBe('function');
     expect(typeof client.replyTrack).toBe('function');
     expect(typeof client.deleteTrack).toBe('function');
@@ -40,6 +39,7 @@ describe('client', function() {
     expect(typeof client.createPlaylist).toBe('function');
     expect(typeof client.getPlaylist).toBe('function');
     expect(typeof client.updatePlaylist).toBe('function');
+    expect(typeof client.deletePlaylist).toBe('function');
     expect(typeof client.favoritePlaylist).toBe('function');
     expect(typeof client.unfavoritePlaylist).toBe('function');
     expect(typeof client.addTrackToPlaylist).toBe('function');
@@ -315,6 +315,24 @@ describe('client', function() {
       const result = await client.updatePlaylist(playlist.id, newFields, token);
 
       expect(result).toEqual(expectedResponse);
+    });
+
+    test('deletePlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const token = 'xxx.xxx.xxx';
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .delete(`/${playlist.id}`)
+        .reply(204);
+
+      const result = await client.deletePlaylist(playlist.id, token);
+
+      expect(result).toBeUndefined();
     });
 
     test('favoritePlaylist', async function() {
