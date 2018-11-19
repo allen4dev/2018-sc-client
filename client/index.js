@@ -242,6 +242,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  removeTrackFromPlaylist(id, trackId, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.playlists}/${id}/tracks/${trackId}/remove`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

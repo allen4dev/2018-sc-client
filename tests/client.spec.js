@@ -43,6 +43,7 @@ describe('client', function() {
     expect(typeof client.favoritePlaylist).toBe('function');
     expect(typeof client.unfavoritePlaylist).toBe('function');
     expect(typeof client.addTrackToPlaylist).toBe('function');
+    expect(typeof client.removeTrackFromPlaylist).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -373,6 +374,31 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.addTrackToPlaylist(
+        playlist.id,
+        track.id,
+        token,
+      );
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('removeTrackFromPlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+      const track = fixtures.getTrack();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getTrackResponse();
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .delete(`/${playlist.id}/tracks/${track.id}/remove`)
+        .reply(200, expectedResponse);
+
+      const result = await client.removeTrackFromPlaylist(
         playlist.id,
         track.id,
         token,
