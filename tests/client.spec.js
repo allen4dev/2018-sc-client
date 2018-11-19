@@ -44,6 +44,7 @@ describe('client', function() {
     expect(typeof client.unfavoritePlaylist).toBe('function');
     expect(typeof client.addTrackToPlaylist).toBe('function');
     expect(typeof client.removeTrackFromPlaylist).toBe('function');
+    expect(typeof client.sharePlaylist).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -421,6 +422,26 @@ describe('client', function() {
         track.id,
         token,
       );
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('sharePlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getPlaylistResponse();
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post(`/${playlist.id}/share`)
+        .reply(200, expectedResponse);
+
+      const result = await client.sharePlaylist(playlist.id, token);
 
       expect(result).toEqual(expectedResponse);
     });
