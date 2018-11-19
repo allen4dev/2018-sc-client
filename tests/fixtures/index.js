@@ -34,6 +34,22 @@ module.exports = {
     };
   },
 
+  getAlbum() {
+    return {
+      id: uuid(),
+      title: 'Album title',
+      photo: 'Album photo',
+    };
+  },
+
+  getRawAlbum() {
+    return {
+      details: { title: 'My album' },
+      photo: 'Album photo',
+      tags: [1, 2, 3],
+    };
+  },
+
   getTokenResponse() {
     return {
       data: {
@@ -52,6 +68,16 @@ module.exports = {
         type: 'tracks',
         id: uuid(),
         attributes: this.getTrack(),
+      },
+    };
+  },
+
+  getAlbumResponse() {
+    return {
+      data: {
+        type: 'alvyns',
+        id: uuid(),
+        attributes: this.getAlbum(),
       },
     };
   },

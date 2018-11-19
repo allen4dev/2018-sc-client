@@ -46,6 +46,8 @@ describe('client', function() {
     expect(typeof client.removeTrackFromPlaylist).toBe('function');
     expect(typeof client.sharePlaylist).toBe('function');
 
+    expect(typeof client.createAlbum).toBe('function');
+
     expect(typeof client.getReply).toBe('function');
   });
 
@@ -442,6 +444,28 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.sharePlaylist(playlist.id, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+  });
+
+  describe('albums', function() {
+    test('createAlbum', async function() {
+      const values = fixtures.getRawAlbum();
+
+      const token = 'xxx.xxx .xxx';
+
+      const expectedResponse = fixtures.getAlbumResponse();
+
+      nock(options.endpoints.albums, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post('/', values)
+        .reply(201, expectedResponse);
+
+      const result = await client.createAlbum(values, token);
 
       expect(result).toEqual(expectedResponse);
     });
