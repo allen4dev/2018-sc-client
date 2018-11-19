@@ -295,6 +295,20 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getAlbum(details, token) {
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.albums}/`,
+      body: details,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

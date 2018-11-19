@@ -47,6 +47,7 @@ describe('client', function() {
     expect(typeof client.sharePlaylist).toBe('function');
 
     expect(typeof client.createAlbum).toBe('function');
+    expect(typeof client.getAlbum).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -464,6 +465,20 @@ describe('client', function() {
       })
         .post('/', values)
         .reply(201, expectedResponse);
+
+      const result = await client.createAlbum(values, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getAlbum', async function() {
+      const album = fixtures.getAlbum();
+
+      const expectedResponse = fixtures.getAlbumResponse();
+
+      nock(options.endpoints.albums)
+        .get(`/${album.id}`)
+        .reply(200, expectedResponse);
 
       const result = await client.createAlbum(values, token);
 
