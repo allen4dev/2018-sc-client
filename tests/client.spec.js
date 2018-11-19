@@ -34,6 +34,7 @@ describe('client', function() {
     expect(typeof client.replyTrack).toBe('function');
     expect(typeof client.deleteTrack).toBe('function');
     expect(typeof client.favoriteTrack).toBe('function');
+    expect(typeof client.unfavoriteTrack).toBe('function');
     expect(typeof client.shareTrack).toBe('function');
 
     expect(typeof client.createPlaylist).toBe('function');
@@ -209,6 +210,26 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.favoriteTrack(track.id, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('unfavoriteTrack', async function() {
+      const track = fixtures.getTrack();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getTrackResponse();
+
+      nock(options.endpoints.tracks, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .delete(`/${track.id}/unfavorite`)
+        .reply(200, expectedResponse);
+
+      const result = await client.unfavoriteTrack(track.id, token);
 
       expect(result).toEqual(expectedResponse);
     });

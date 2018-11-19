@@ -127,6 +127,19 @@ class Client {
     return Promise.resolve(request(options));
   }
 
+  unfavoriteTrack(id, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.tracks}/${id}/unfavorite`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
   shareTrack(id, token) {
     const options = {
       method: 'POST',

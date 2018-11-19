@@ -3,6 +3,7 @@ const uuid = require('uuid');
 module.exports = {
   getTrack() {
     return {
+      id: uuid(),
       title: 'Track title',
       photo: 'Track image file',
       src: 'Track audio file',
@@ -12,6 +13,7 @@ module.exports = {
 
   getUser() {
     return {
+      id: uuid(),
       email: 'allen@example.test',
       password: 'secret',
       username: 'Allen',
@@ -20,12 +22,14 @@ module.exports = {
 
   getReply() {
     return {
+      id: uuid(),
       body: 'Horrible track',
     };
   },
 
   getPlaylist() {
     return {
+      id: uuid(),
       body: 'Horrible playlist',
     };
   },
