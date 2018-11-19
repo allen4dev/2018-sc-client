@@ -166,6 +166,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getPlaylist(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.playlists}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

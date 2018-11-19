@@ -251,6 +251,20 @@ describe('client', function() {
 
       expect(result).toEqual(expectedResponse);
     });
+
+    test('getPlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const expectedResponse = fixtures.getPlaylistResponse();
+
+      nock(options.endpoints.playlists)
+        .get(`/${playlist.id}`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getPlaylist(playlist.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
   });
 
   describe('replies', function() {
