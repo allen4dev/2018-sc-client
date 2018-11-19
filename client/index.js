@@ -229,6 +229,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  addTrackToPlaylist(id, trackId, token) {
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.playlists}/${id}/tracks/${trackId}/add`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
