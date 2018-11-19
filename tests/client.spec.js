@@ -37,6 +37,8 @@ describe('client', function() {
     expect(typeof client.shareTrack).toBe('function');
 
     expect(typeof client.createPlaylist).toBe('function');
+    expect(typeof client.getPlaylist).toBe('function');
+    expect(typeof client.updatePlaylist).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -262,6 +264,30 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.getPlaylist(playlist.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('updatePlaylist', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const newFields = {
+        title: 'A best title',
+      };
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getPlaylistResponse();
+
+      nock(options.endpoints.playlists, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .patch(`/${playlist.id}`, newFields)
+        .reply(200, expectedResponse);
+
+      const result = await client.updatePlaylist(playlist.id, newFields, token);
 
       expect(result).toEqual(expectedResponse);
     });

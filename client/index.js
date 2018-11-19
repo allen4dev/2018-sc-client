@@ -176,6 +176,20 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  updatePlaylist(id, details, token) {
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.playlists}/${id}`,
+      body: details,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
