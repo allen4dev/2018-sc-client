@@ -296,13 +296,23 @@ class Client {
     return Promise.resolve(request(options));
   }
 
-  getAlbum(details, token) {
+  getAlbum(id) {
     const options = {
-      method: 'POST',
+      method: 'GET',
+      uri: `${this.options.endpoints.albums}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  updateAlbum(id, details, token) {
+    const options = {
+      method: 'PATCH',
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      uri: `${this.options.endpoints.albums}/`,
+      uri: `${this.options.endpoints.albums}/${id}`,
       body: details,
       json: true,
     };

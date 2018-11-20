@@ -48,6 +48,7 @@ describe('client', function() {
 
     expect(typeof client.createAlbum).toBe('function');
     expect(typeof client.getAlbum).toBe('function');
+    expect(typeof client.updateAlbum).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -480,7 +481,27 @@ describe('client', function() {
         .get(`/${album.id}`)
         .reply(200, expectedResponse);
 
-      const result = await client.createAlbum(values, token);
+      const result = await client.getAlbum(album.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('updateAlbum', async function() {
+      const album = fixtures.getAlbum();
+      const details = {
+        ...album,
+        title: 'A new album name',
+      };
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getAlbumResponse();
+
+      nock(options.endpoints.albums)
+        .patch(`/${album.id}`)
+        .reply(200, expectedResponse);
+
+      const result = await client.updateAlbum(album.id, details, token);
 
       expect(result).toEqual(expectedResponse);
     });
