@@ -358,6 +358,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  shareAlbum(id, token) {
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.albums}/${id}/share`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

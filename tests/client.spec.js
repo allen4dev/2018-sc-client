@@ -50,8 +50,9 @@ describe('client', function() {
     expect(typeof client.publishAlbum).toBe('function');
     expect(typeof client.getAlbum).toBe('function');
     expect(typeof client.updateAlbum).toBe('function');
-    expect(typeof client.favoriteAlbum).toBe('function');
     expect(typeof client.deleteAlbum).toBe('function');
+    expect(typeof client.favoriteAlbum).toBe('function');
+    expect(typeof client.shareAlbum).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -557,6 +558,22 @@ describe('client', function() {
       const result = await client.deleteAlbum(album.id, token);
 
       expect(result).toBeUndefined();
+    });
+
+    test('shareAlbum', async function() {
+      const album = fixtures.getAlbum();
+
+      const expectedResponse = fixtures.getAlbumResponse();
+
+      const token = 'xxx.xxx.xxx';
+
+      nock(options.endpoints.albums)
+        .post(`/${album.id}/share`)
+        .reply(200, expectedResponse);
+
+      const result = await client.shareAlbum(album.id, token);
+
+      expect(result).toEqual(expectedResponse);
     });
   });
 
