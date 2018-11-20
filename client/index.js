@@ -69,7 +69,7 @@ class Client {
 
   publishTrack(id, token) {
     const options = {
-      method: 'POST',
+      method: 'PATCH',
       uri: `${this.options.endpoints.tracks}/${id}/publish`,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -314,6 +314,19 @@ class Client {
       },
       uri: `${this.options.endpoints.albums}/${id}`,
       body: details,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  publishAlbum(id, token) {
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.albums}/${id}`,
       json: true,
     };
 

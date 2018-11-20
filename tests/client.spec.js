@@ -47,6 +47,7 @@ describe('client', function() {
     expect(typeof client.sharePlaylist).toBe('function');
 
     expect(typeof client.createAlbum).toBe('function');
+    expect(typeof client.publishAlbum).toBe('function');
     expect(typeof client.getAlbum).toBe('function');
     expect(typeof client.updateAlbum).toBe('function');
 
@@ -141,7 +142,7 @@ describe('client', function() {
           Authorization: `Bearer ${token}`,
         },
       })
-        .post(`/${track.id}/publish`)
+        .patch(`/${track.id}/publish`)
         .reply(200, expectedResponse);
 
       const result = await client.publishTrack(track.id, token);
@@ -468,6 +469,26 @@ describe('client', function() {
         .reply(201, expectedResponse);
 
       const result = await client.createAlbum(values, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('publishAlbum', async function() {
+      const album = fixtures.getAlbum();
+
+      const token = 'xxx.xxx .xxx';
+
+      const expectedResponse = fixtures.getAlbumResponse();
+
+      nock(options.endpoints.albums, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .patch(`/${album.id}`)
+        .reply(200, expectedResponse);
+
+      const result = await client.publishAlbum(album.id, token);
 
       expect(result).toEqual(expectedResponse);
     });
