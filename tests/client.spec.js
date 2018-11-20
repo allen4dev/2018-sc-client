@@ -66,6 +66,11 @@ describe('client', function() {
     expect(typeof client.deleteProfile).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
+
+    expect(typeof client.getTags).toBe('function');
+    expect(typeof client.getTagTracks).toBe('function');
+    expect(typeof client.getTagAlbums).toBe('function');
+    expect(typeof client.getTagPlaylists).toBe('function');
   });
 
   describe('auth', function() {
@@ -780,6 +785,70 @@ describe('client', function() {
       const result = await client.deleteProfile(user.id, token);
 
       expect(result).toBeUndefined();
+    });
+  });
+
+  describe('tags', function() {
+    test('getTags', async function() {
+      const tag = fixtures.getTag();
+
+      const expectedResponse = fixtures.getResourceResponse('tags', tag);
+
+      nock(options.endpoints.tags)
+        .get('/')
+        .reply(200, expectedResponse);
+
+      const result = await client.getTags();
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getTagTracks', async function() {
+      const tag = fixtures.getTag();
+      const track = fixtures.getTrack();
+
+      const expectedResponse = fixtures.getResourcesResponse('tracks', track);
+
+      nock(options.endpoints.tags)
+        .get(`/${tag.id}/tracks`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getTagTracks(tag.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getTagAlbums', async function() {
+      const tag = fixtures.getTag();
+      const album = fixtures.getAlbum();
+
+      const expectedResponse = fixtures.getResourcesResponse('albums', album);
+
+      nock(options.endpoints.tags)
+        .get(`/${tag.id}/albums`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getTagAlbums(tag.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getTagPlaylists', async function() {
+      const tag = fixtures.getTag();
+      const playlist = fixtures.getPlaylist();
+
+      const expectedResponse = fixtures.getResourcesResponse(
+        'playlists',
+        playlist,
+      );
+
+      nock(options.endpoints.tags)
+        .get(`/${tag.id}/playlists`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getTagPlaylists(tag.id);
+
+      expect(result).toEqual(expectedResponse);
     });
   });
 });

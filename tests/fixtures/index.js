@@ -50,6 +50,13 @@ module.exports = {
     };
   },
 
+  getTag() {
+    return {
+      id: uuid(),
+      name: 'Some tag name',
+    };
+  },
+
   getTokenResponse() {
     return {
       data: {

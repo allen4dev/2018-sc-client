@@ -470,6 +470,46 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getTags() {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.tags}/`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getTagTracks(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.tags}/${id}/tracks`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getTagAlbums(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.tags}/${id}/albums`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getTagPlaylists(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.tags}/${id}/playlists`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
