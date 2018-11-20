@@ -437,6 +437,26 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getUserFollowers(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.users}/${id}/followers`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getUsersFollowing(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.users}/${id}/following`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

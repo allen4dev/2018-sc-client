@@ -60,6 +60,8 @@ describe('client', function() {
     expect(typeof client.getUserAlbums).toBe('function');
     expect(typeof client.followUser).toBe('function');
     expect(typeof client.unfollowUser).toBe('function');
+    expect(typeof client.getUserFollowers).toBe('function');
+    expect(typeof client.getUsersFollowing).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -726,6 +728,36 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.unfollowUser(unfollowed.id, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getUserFollowers', async function() {
+      const user = fixtures.getUser();
+      const follower = fixtures.getUser();
+
+      const expectedResponse = fixtures.getResourcesResponse('users', follower);
+
+      nock(options.endpoints.users)
+        .get(`/${user.id}/followers`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getUserFollowers(user.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getUsersFollowing', async function() {
+      const user = fixtures.getUser();
+      const followed = fixtures.getUser();
+
+      const expectedResponse = fixtures.getResourcesResponse('users', followed);
+
+      nock(options.endpoints.users)
+        .get(`/${user.id}/following`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getUsersFollowing(user.id);
 
       expect(result).toEqual(expectedResponse);
     });
