@@ -391,6 +391,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getUserPlaylists(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.users}/${id}/playlists`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

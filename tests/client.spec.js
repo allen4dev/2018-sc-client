@@ -56,6 +56,7 @@ describe('client', function() {
 
     expect(typeof client.getUser).toBe('function');
     expect(typeof client.getUserTracks).toBe('function');
+    expect(typeof client.getUserPlaylists).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -645,6 +646,23 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.getUserTracks(user.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getUserPlaylists', async function() {
+      const user = fixtures.getUser();
+
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        fixtures.getPlaylist(),
+      );
+
+      nock(options.endpoints.users)
+        .get(`/${user.id}/playlists`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getUserPlaylists(user.id);
 
       expect(result).toEqual(expectedResponse);
     });
