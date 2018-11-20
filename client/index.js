@@ -381,6 +381,16 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getUserTracks(id) {
+    const options = {
+      method: 'GET',
+      uri: `${this.options.endpoints.users}/${id}/tracks`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

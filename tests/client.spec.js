@@ -55,6 +55,7 @@ describe('client', function() {
     expect(typeof client.shareAlbum).toBe('function');
 
     expect(typeof client.getUser).toBe('function');
+    expect(typeof client.getUserTracks).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -98,7 +99,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', details);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -120,7 +121,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -140,7 +141,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -158,7 +159,7 @@ describe('client', function() {
     test('getTrack', async function() {
       const track = fixtures.getTrack();
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.tracks)
         .get(`/${track.id}`)
@@ -193,7 +194,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getReplyResponse();
+      const expectedResponse = fixtures.getResourceResponse('replies', details);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -213,7 +214,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -233,7 +234,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -253,7 +254,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.tracks, {
         reqheaders: {
@@ -275,7 +276,10 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getPlaylistResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        details,
+      );
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -293,7 +297,10 @@ describe('client', function() {
     test('getPlaylist', async function() {
       const playlist = fixtures.getPlaylist();
 
-      const expectedResponse = fixtures.getPlaylistResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        playlist,
+      );
 
       nock(options.endpoints.playlists)
         .get(`/${playlist.id}`)
@@ -313,7 +320,10 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getPlaylistResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        playlist,
+      );
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -351,7 +361,10 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getPlaylistResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        playlist,
+      );
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -371,7 +384,10 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getPlaylistResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        playlist,
+      );
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -392,7 +408,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -417,7 +433,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getTrackResponse();
+      const expectedResponse = fixtures.getResourceResponse('tracks', track);
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -441,7 +457,10 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getPlaylistResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'playlists',
+        playlist,
+      );
 
       nock(options.endpoints.playlists, {
         reqheaders: {
@@ -463,7 +482,10 @@ describe('client', function() {
 
       const token = 'xxx.xxx .xxx';
 
-      const expectedResponse = fixtures.getAlbumResponse();
+      const expectedResponse = fixtures.getResourceResponse(
+        'albums',
+        fixtures.getAlbum(),
+      );
 
       nock(options.endpoints.albums, {
         reqheaders: {
@@ -483,7 +505,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx .xxx';
 
-      const expectedResponse = fixtures.getAlbumResponse();
+      const expectedResponse = fixtures.getResourceResponse('albums', album);
 
       nock(options.endpoints.albums, {
         reqheaders: {
@@ -501,7 +523,7 @@ describe('client', function() {
     test('getAlbum', async function() {
       const album = fixtures.getAlbum();
 
-      const expectedResponse = fixtures.getAlbumResponse();
+      const expectedResponse = fixtures.getResourceResponse('albums', album);
 
       nock(options.endpoints.albums)
         .get(`/${album.id}`)
@@ -521,7 +543,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getAlbumResponse();
+      const expectedResponse = fixtures.getResourceResponse('albums', album);
 
       nock(options.endpoints.albums)
         .patch(`/${album.id}`)
@@ -537,7 +559,7 @@ describe('client', function() {
 
       const token = 'xxx.xxx.xxx';
 
-      const expectedResponse = fixtures.getAlbumResponse();
+      const expectedResponse = fixtures.getResourceResponse('albums', album);
 
       nock(options.endpoints.albums)
         .post(`/${album.id}/favorite`)
@@ -565,7 +587,7 @@ describe('client', function() {
     test('shareAlbum', async function() {
       const album = fixtures.getAlbum();
 
-      const expectedResponse = fixtures.getAlbumResponse();
+      const expectedResponse = fixtures.getResourceResponse('albums', album);
 
       const token = 'xxx.xxx.xxx';
 
@@ -583,7 +605,7 @@ describe('client', function() {
     test('getReply', async function() {
       const reply = fixtures.getReply();
 
-      const expectedResponse = fixtures.getReplyResponse();
+      const expectedResponse = fixtures.getResourceResponse('replies', reply);
 
       nock(options.endpoints.replies)
         .get(`/${reply.id}`)
@@ -599,13 +621,30 @@ describe('client', function() {
     test('getUser', async function() {
       const user = fixtures.getUser();
 
-      const expectedResponse = fixtures.getUserResponse();
+      const expectedResponse = fixtures.getResourceResponse('users', user);
 
       nock(options.endpoints.users)
         .get(`/${user.id}`)
         .reply(200, expectedResponse);
 
       const result = await client.getUser(user.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getUserTracks', async function() {
+      const user = fixtures.getUser();
+
+      const expectedResponse = fixtures.getResourceResponse(
+        'tracks',
+        fixtures.getTrack(),
+      );
+
+      nock(options.endpoints.users)
+        .get(`/${user.id}/tracks`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getUserTracks(user.id);
 
       expect(result).toEqual(expectedResponse);
     });

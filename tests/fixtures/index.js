@@ -11,6 +11,18 @@ module.exports = {
     };
   },
 
+  getResourcesResponse(type, resource) {
+    return {
+      data: [
+        {
+          type: type,
+          id: uuid(),
+          attributes: resource,
+        },
+      ],
+    };
+  },
+
   getUser() {
     return {
       id: uuid(),
@@ -62,52 +74,12 @@ module.exports = {
     };
   },
 
-  getUserResponse() {
+  getResourceResponse(type, resource) {
     return {
       data: {
-        type: 'users',
+        type,
         id: uuid(),
-        attributes: this.getUser(),
-      },
-    };
-  },
-
-  getTrackResponse() {
-    return {
-      data: {
-        type: 'tracks',
-        id: uuid(),
-        attributes: this.getTrack(),
-      },
-    };
-  },
-
-  getAlbumResponse() {
-    return {
-      data: {
-        type: 'alvyns',
-        id: uuid(),
-        attributes: this.getAlbum(),
-      },
-    };
-  },
-
-  getReplyResponse() {
-    return {
-      data: {
-        type: 'replies',
-        id: uuid(),
-        attributes: this.getReply(),
-      },
-    };
-  },
-
-  getPlaylistResponse() {
-    return {
-      data: {
-        type: 'playlists',
-        id: uuid(),
-        attributes: this.getPlaylist(),
+        attributes: resource,
       },
     };
   },
