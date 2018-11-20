@@ -62,6 +62,16 @@ module.exports = {
     };
   },
 
+  getUserResponse() {
+    return {
+      data: {
+        type: 'users',
+        id: uuid(),
+        attributes: this.getUser(),
+      },
+    };
+  },
+
   getTrackResponse() {
     return {
       data: {

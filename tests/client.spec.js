@@ -54,6 +54,8 @@ describe('client', function() {
     expect(typeof client.favoriteAlbum).toBe('function');
     expect(typeof client.shareAlbum).toBe('function');
 
+    expect(typeof client.getUser).toBe('function');
+
     expect(typeof client.getReply).toBe('function');
   });
 
@@ -588,6 +590,22 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.getReply(reply.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+  });
+
+  describe('users', function() {
+    test('getUser', async function() {
+      const user = fixtures.getUser();
+
+      const expectedResponse = fixtures.getUserResponse();
+
+      nock(options.endpoints.users)
+        .get(`/${user.id}`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getUser(user.id);
 
       expect(result).toEqual(expectedResponse);
     });
