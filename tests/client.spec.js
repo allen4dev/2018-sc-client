@@ -50,6 +50,7 @@ describe('client', function() {
     expect(typeof client.publishAlbum).toBe('function');
     expect(typeof client.getAlbum).toBe('function');
     expect(typeof client.updateAlbum).toBe('function');
+    expect(typeof client.favoriteAlbum).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -523,6 +524,22 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.updateAlbum(album.id, details, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('favoriteAlbum', async function() {
+      const album = fixtures.getAlbum();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getAlbumResponse();
+
+      nock(options.endpoints.albums)
+        .post(`/${album.id}/favorite`)
+        .reply(200, expectedResponse);
+
+      const result = await client.favoriteAlbum(album.id, token);
 
       expect(result).toEqual(expectedResponse);
     });
