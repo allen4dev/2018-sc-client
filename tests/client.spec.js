@@ -62,6 +62,8 @@ describe('client', function() {
     expect(typeof client.unfollowUser).toBe('function');
     expect(typeof client.getUserFollowers).toBe('function');
     expect(typeof client.getUsersFollowing).toBe('function');
+    expect(typeof client.getUsersFollowing).toBe('function');
+    expect(typeof client.deleteProfile).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -760,6 +762,24 @@ describe('client', function() {
       const result = await client.getUsersFollowing(user.id);
 
       expect(result).toEqual(expectedResponse);
+    });
+
+    test('deleteUser', async function() {
+      const user = fixtures.getUser();
+
+      const token = 'xxx.xxx.xxx';
+
+      nock(options.endpoints.users, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .delete(`/${user.id}`)
+        .reply(204);
+
+      const result = await client.deleteProfile(user.id, token);
+
+      expect(result).toBeUndefined();
     });
   });
 });

@@ -457,6 +457,19 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  deleteProfile(id, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.users}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;
