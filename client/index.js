@@ -537,6 +537,71 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getProfileTracks(token) {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.me}/tracks`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getProfileAlbums(token) {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.me}/albums`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getProfilePlaylists(token) {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.me}/playlists`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getProfileFollowers(token) {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.me}/followers`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  getProfileFollowings(token) {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.me}/followings`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

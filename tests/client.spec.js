@@ -74,6 +74,11 @@ describe('client', function() {
 
     expect(typeof client.getProfile).toBe('function');
     expect(typeof client.updateProfile).toBe('function');
+    expect(typeof client.getProfileTracks).toBe('function');
+    expect(typeof client.getProfileAlbums).toBe('function');
+    expect(typeof client.getProfilePlaylists).toBe('function');
+    expect(typeof client.getProfileFollowers).toBe('function');
+    expect(typeof client.getProfileFollowings).toBe('function');
   });
 
   describe('auth', function() {
@@ -897,6 +902,109 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.updateProfile(details, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getProfileTracks', async function() {
+      const track = fixtures.getTrack();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourcesResponse('tracks', track);
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .get(`/tracks`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getProfileTracks(token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getProfileAlbums', async function() {
+      const album = fixtures.getAlbum();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourcesResponse('albums', album);
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .get(`/albums`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getProfileAlbums(token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getProfilePlaylists', async function() {
+      const playlist = fixtures.getPlaylist();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourcesResponse(
+        'playlists',
+        playlist,
+      );
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .get(`/playlists`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getProfilePlaylists(token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getProfileFollowers', async function() {
+      const follower = fixtures.getUser();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourcesResponse('users', follower);
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .get(`/followers`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getProfileFollowers(token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('getProfileFollowings', async function() {
+      const followed = fixtures.getUser();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourcesResponse('users', followed);
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .get(`/followings`)
+        .reply(200, expectedResponse);
+
+      const result = await client.getProfileFollowings(token);
 
       expect(result).toEqual(expectedResponse);
     });
