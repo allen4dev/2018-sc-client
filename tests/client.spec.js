@@ -58,6 +58,8 @@ describe('client', function() {
     expect(typeof client.getUserTracks).toBe('function');
     expect(typeof client.getUserPlaylists).toBe('function');
     expect(typeof client.getUserAlbums).toBe('function');
+    expect(typeof client.followUser).toBe('function');
+    expect(typeof client.unfollowUser).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -637,7 +639,7 @@ describe('client', function() {
     test('getUserTracks', async function() {
       const user = fixtures.getUser();
 
-      const expectedResponse = fixtures.getResourceResponse(
+      const expectedResponse = fixtures.getResourcesResponse(
         'tracks',
         fixtures.getTrack(),
       );
@@ -654,7 +656,7 @@ describe('client', function() {
     test('getUserPlaylists', async function() {
       const user = fixtures.getUser();
 
-      const expectedResponse = fixtures.getResourceResponse(
+      const expectedResponse = fixtures.getResourcesResponse(
         'playlists',
         fixtures.getPlaylist(),
       );
@@ -671,7 +673,7 @@ describe('client', function() {
     test('getUserAlbums', async function() {
       const user = fixtures.getUser();
 
-      const expectedResponse = fixtures.getResourceResponse(
+      const expectedResponse = fixtures.getResourcesResponse(
         'albums',
         fixtures.getAlbum(),
       );
@@ -681,6 +683,49 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.getUserAlbums(user.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('followUser', async function() {
+      const followed = fixtures.getUser();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourceResponse('users', followed);
+
+      nock(options.endpoints.users, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .post(`/${followed.id}/follow`)
+        .reply(200, expectedResponse);
+
+      const result = await client.followUser(followed.id, token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('followUser', async function() {
+      const unfollowed = fixtures.getUser();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourceResponse(
+        'users',
+        unfollowed,
+      );
+
+      nock(options.endpoints.users, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .delete(`/${unfollowed.id}/unfollow`)
+        .reply(200, expectedResponse);
+
+      const result = await client.unfollowUser(unfollowed.id, token);
 
       expect(result).toEqual(expectedResponse);
     });

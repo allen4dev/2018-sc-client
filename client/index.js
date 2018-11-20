@@ -411,6 +411,32 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  followUser(id, token) {
+    const options = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.users}/${id}/follow`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  unfollowUser(id, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.users}/${id}/unfollow`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

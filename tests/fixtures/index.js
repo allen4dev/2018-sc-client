@@ -11,18 +11,6 @@ module.exports = {
     };
   },
 
-  getResourcesResponse(type, resource) {
-    return {
-      data: [
-        {
-          type: type,
-          id: uuid(),
-          attributes: resource,
-        },
-      ],
-    };
-  },
-
   getUser() {
     return {
       id: uuid(),
@@ -71,6 +59,18 @@ module.exports = {
           token: 'xxx.xxx.xxx',
         },
       },
+    };
+  },
+
+  getResourcesResponse(type, resource) {
+    return {
+      data: [
+        {
+          type: type,
+          id: uuid(),
+          attributes: resource,
+        },
+      ],
     };
   },
 
