@@ -51,6 +51,7 @@ describe('client', function() {
     expect(typeof client.getAlbum).toBe('function');
     expect(typeof client.updateAlbum).toBe('function');
     expect(typeof client.favoriteAlbum).toBe('function');
+    expect(typeof client.deleteAlbum).toBe('function');
 
     expect(typeof client.getReply).toBe('function');
   });
@@ -542,6 +543,20 @@ describe('client', function() {
       const result = await client.favoriteAlbum(album.id, token);
 
       expect(result).toEqual(expectedResponse);
+    });
+
+    test('deleteAlbum', async function() {
+      const album = fixtures.getAlbum();
+
+      const token = 'xxx.xxx.xxx';
+
+      nock(options.endpoints.albums)
+        .delete(`/${album.id}`)
+        .reply(204);
+
+      const result = await client.deleteAlbum(album.id, token);
+
+      expect(result).toBeUndefined();
     });
   });
 

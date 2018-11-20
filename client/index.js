@@ -333,6 +333,19 @@ class Client {
     return Promise.resolve(request(options));
   }
 
+  deleteAlbum(id, token) {
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.albums}/${id}`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
   favoriteAlbum(id, token) {
     const options = {
       method: 'POST',
