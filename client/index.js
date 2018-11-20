@@ -510,6 +510,33 @@ class Client {
 
     return Promise.resolve(request(options));
   }
+
+  getProfile(token) {
+    const options = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      uri: `${this.options.endpoints.me}/`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
+
+  updateProfile(details, token) {
+    const options = {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: details,
+      uri: `${this.options.endpoints.me}/`,
+      json: true,
+    };
+
+    return Promise.resolve(request(options));
+  }
 }
 
 module.exports = Client;

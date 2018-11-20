@@ -71,6 +71,9 @@ describe('client', function() {
     expect(typeof client.getTagTracks).toBe('function');
     expect(typeof client.getTagAlbums).toBe('function');
     expect(typeof client.getTagPlaylists).toBe('function');
+
+    expect(typeof client.getProfile).toBe('function');
+    expect(typeof client.updateProfile).toBe('function');
   });
 
   describe('auth', function() {
@@ -847,6 +850,53 @@ describe('client', function() {
         .reply(200, expectedResponse);
 
       const result = await client.getTagPlaylists(tag.id);
+
+      expect(result).toEqual(expectedResponse);
+    });
+  });
+
+  describe('me', function() {
+    test('getProfile', async function() {
+      const user = fixtures.getUser();
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourceResponse('users', user);
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .get('/')
+        .reply(200, expectedResponse);
+
+      const result = await client.getProfile(token);
+
+      expect(result).toEqual(expectedResponse);
+    });
+
+    test('updateProfile', async function() {
+      const user = fixtures.getUser();
+
+      const details = {
+        ...user,
+        fullname: 'User fullname',
+      };
+
+      const token = 'xxx.xxx.xxx';
+
+      const expectedResponse = fixtures.getResourceResponse('users', user);
+
+      nock(options.endpoints.me, {
+        reqheaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .patch('/', details)
+        .reply(200, expectedResponse);
+
+      const result = await client.updateProfile(details, token);
 
       expect(result).toEqual(expectedResponse);
     });
